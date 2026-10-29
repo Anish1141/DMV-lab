@@ -23,6 +23,8 @@ plt.show()
 # Graph 2: Sales distribution
 df["Sales"].plot(kind="box", title="Sales Distribution")
 plt.show()
+
+
 DMV 2 weather api
 import requests
 import pandas as pd
@@ -90,6 +92,8 @@ X_test = scaler.transform(X_test)
 # Export cleaned data
 df.to_csv("cleaned_churn.csv", index=False)
 print("Data cleaning completed!")
+
+
 dmv 4: real estate data wrangling
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -115,6 +119,8 @@ plt.show()
 # Save cleaned data
 df.to_csv("cleaned_realestate.csv", index=False)
 print("Data wrangling completed!")
+
+
 dmv 5: city aqi
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -140,6 +146,8 @@ plt.xlabel("PM2.5")
 plt.ylabel("AQI")
 plt.title("AQI vs PM2.5")
 plt.show()
+
+
 dmv 6 : region in retail company
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -161,6 +169,8 @@ values="Sales", aggfunc="sum", fill_value=0)
 data.plot(kind="bar", stacked=True, title="Regional Sales by Category")
 plt.ylabel("Total Sales")
 plt.show()
+
+
 dmv 7: time series analysis
 import pandas as pd
 import matplotlib.pyplot as plt
