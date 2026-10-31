@@ -1,2 +1,52 @@
-its a5 dmv
+#
+import pandas as pd
+import matplotlib.pyplot as plt
 
+# Load and explore
+df = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\AirQuality.csv", parse_dates=["Date"])
+print(df.head())
+df.info()
+
+# Use one city (file has 26 cities)
+df = df[df["City"] == "Delhi"].sort_values("Date")
+df["Year"] = df["Date"].dt.year
+
+# AQI trend
+df.plot(x="Date", y="AQI", color="red", title="AQI Trend in Delhi")
+plt.ylabel("AQI")
+plt.show()
+
+# Each pollutant on a separate plot
+df.plot(x="Date", y=["PM2.5", "PM10", "CO"], subplots=True,
+        figsize=(10, 7), title="Pollutant Trends")
+plt.show()
+
+# Bar plot: average AQI per year
+df.groupby("Year")["AQI"].mean().plot(kind="bar", color="green", title="Average AQI by Year")
+plt.ylabel("AQI")
+plt.show()
+
+# Stacked bar: AQI category days per year
+pd.crosstab(df["Year"], df["AQI_Bucket"]).plot(
+    kind="bar", stacked=True, title="AQI Categories by Year")
+plt.ylabel("Days")
+plt.show()
+
+# Box plots
+df[["PM2.5", "PM10", "CO"]].plot(kind="box", title="Pollutant Distribution")
+plt.show()
+
+df.boxplot(column="AQI", by="Year")
+plt.title("AQI Distribution by Year")
+plt.suptitle("")
+plt.ylabel("AQI")
+plt.show()
+
+# Scatter and bubble charts
+df.plot(x="PM2.5", y="AQI", kind="scatter", color="purple", title="AQI vs PM2.5")
+plt.show()
+
+d = df.dropna(subset=["PM10", "AQI", "CO"])
+d.plot(x="PM10", y="AQI", kind="scatter", s=d["CO"] * 10, alpha=0.4,
+       title="AQI vs PM10 (bubble size = CO)")
+plt.show()
