@@ -41,3 +41,120 @@ plt.show()
 
 df["Sales"].plot(kind="box", title="Sales Distribution")
 plt.show()
+xxxxxxxxxxxxxxxxxxxxxxxxx
+A. Importing Libraries
+- pandas is imported as pd to read, clean, combine, and analyze tabular data.
+- matplotlib.pyplot is imported as plt to create graphs.
+
+B. Loading Different File Formats
+- pd.read_csv() reads the CSV file.
+- pd.read_excel() reads the Excel workbook. The openpyxl package is commonly used as its Excel engine.
+- pd.read_json() reads the JSON file.
+- Each file is stored in a separate DataFrame.
+
+C. Exploring the Dataset
+- info() displays column names, data types, and non-null counts.
+- isnull().sum() counts missing values in each column.
+
+D. Combining the Datasets
+- pd.concat() joins the three DataFrames row-wise.
+- ignore_index=True creates a fresh continuous index.
+- pd.to_datetime() converts the Date column into a date-time data type so date operations can be performed.
+
+E. Cleaning the Data
+- drop_duplicates() removes repeated records.
+- median() calculates the middle value of Quantity.
+- fillna() replaces missing Quantity values with the median.
+- Missing Customer values are replaced with the text "Unknown".
+
+F. Transforming the Data
+- Sales is calculated by multiplying Quantity by Price.
+- dt.month_name() extracts the month name from each date.
+
+G. Analyzing the Data
+- describe() gives statistical information such as count, mean, standard deviation, minimum, and maximum.
+- sum() calculates total sales.
+- mean() calculates average sales per record.
+- groupby("Region") groups records region-wise and calculates sales totals.
+- value_counts() counts how many records belong to each category.
+
+H. Visualizing the Data
+- Bar chart: compares total sales for different products.
+- Pie chart: displays each category's share of total sales. autopct shows percentages.
+- Box plot: displays the distribution of sales and helps identify possible outliers.
+- plt.show() displays each graph.
+
+## 6. PROGRAM WORKFLOW
+1. Import Pandas and Matplotlib.
+2. Read the CSV, Excel, and JSON files.
+3. Explore the CSV data and identify missing values.
+4. Combine all three datasets.
+5. Convert the Date column into date-time format.
+6. Remove duplicate records and fill missing values.
+7. Calculate Sales and extract Month.
+8. Calculate descriptive statistics and sales summaries.
+9. Generate bar, pie, and box plots.
+10. Display the results.
+
+## 7. EXPECTED OUTPUT
+- Information about the CSV dataset and its missing values is displayed.
+- The three datasets are combined into one DataFrame.
+- Duplicate rows are removed and missing Quantity and Customer values are handled.
+- Descriptive statistics, total sales, average sales, region-wise sales, and category counts are printed.
+- Three visualizations are displayed:
+  1. Bar chart: Sales by Product.
+  2. Pie chart: Sales by Category.
+  3. Box plot: Sales Distribution.
+
+Exact numerical results depend on the input datasets.
+
+## 8. VIVA QUESTIONS AND ANSWERS
+
+Q1. What is Pandas?
+Ans. Pandas is a Python library used for data manipulation and analysis. It provides Series and DataFrame structures.
+
+Q2. What is a DataFrame?
+Ans. A DataFrame is a two-dimensional tabular data structure containing rows and columns.
+
+Q3. Which function is used to read a CSV file?
+Ans. pd.read_csv().
+
+Q4. Which function is used to read an Excel file?
+Ans. pd.read_excel().
+
+Q5. Which function is used to read a JSON file?
+Ans. pd.read_json().
+
+Q6. What is JSON?
+Ans. JSON stands for JavaScript Object Notation. It is a text-based format used to store and exchange structured data.
+
+Q7. What is the use of concat()?
+Ans. concat() combines two or more Pandas objects along a selected axis. Here, it combines datasets row-wise.
+
+Q8. What does ignore_index=True do?
+Ans. It creates a new continuous index after combining the DataFrames.
+
+Q9. What is a missing value?
+Ans. A missing value represents data that is unavailable or not recorded.
+
+Q10. What is the use of fillna()?
+Ans. fillna() replaces missing values with a specified value or calculated statistic.
+
+Q11. Why is the median used for Quantity?
+Ans. The median is less affected by extreme values than the mean and can be useful for filling missing numerical values.
+
+Q12. What does drop_duplicates() do?
+Ans. It removes duplicate rows from a DataFrame.
+
+Q13. What is the purpose of pd.to_datetime()?
+Ans. It converts date values into Pandas datetime format.
+
+Q14. What is groupby()?
+Ans. groupby() divides data into groups based on one or more columns and allows aggregate calculations.
+
+Q15. What is a box plot?
+Ans. A box plot summarizes a numerical distribution using the median, quartiles, and possible outliers.
+
+## 9. SHORT VIVA ANSWER
+This program reads sales data from CSV, Excel, and JSON files using Pandas. It combines the datasets, handles missing and duplicate values, creates Sales and Month columns, performs statistical and group-wise analysis, and visualizes the results using bar, pie, and box plots.
+
