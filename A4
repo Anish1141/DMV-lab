@@ -46,3 +46,168 @@ plt.show()
 # Save
 df.to_csv("cleaned_realestate.csv", index=False)
 print("Data wrangling completed!")
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+A. Importing Libraries
+- Pandas is used for loading, cleaning, transforming, merging, and analyzing data.
+- Matplotlib is used to display box plots.
+
+B. Loading the Dataset
+- read_csv() loads the real estate dataset.
+- The raw string r before the file path helps Python interpret backslashes correctly.
+- head() displays the first five records.
+
+C. Cleaning Column Names
+- df.columns accesses all column names.
+- str.strip() removes spaces at the beginning and end.
+- str.lower() converts names to lowercase.
+- str.replace(" ", "_") replaces spaces with underscores.
+- For example, "Sale Price" becomes "sale_price".
+
+D. Handling Missing Values and Duplicates
+- isnull().sum().sum() counts all missing cells in the DataFrame.
+- drop_duplicates() removes duplicate rows.
+- dropna(subset=["price"]) removes rows where the price is missing.
+- median(numeric_only=True) calculates medians for numerical columns only.
+- fillna() fills remaining missing values in numerical columns with their medians.
+
+E. Converting Date
+- str[:8] selects the first eight characters from each date string.
+- pd.to_datetime() converts the selected date text into datetime values.
+- The resulting date column supports operations such as extracting the year.
+- This expression assumes the source date values are strings in a compatible format.
+
+F. Merging ZIP-Code Average Price
+- groupby("zipcode") groups records by ZIP code.
+- mean() calculates the average price in each ZIP-code group.
+- rename("zip_avg_price") gives the resulting Series a meaningful name.
+- merge() joins this average-price information back to the original DataFrame using zipcode as the common key.
+
+G. Filtering Records
+- dt.year extracts the year from the date column.
+- between(3, 4) selects properties with 3 or 4 bedrooms.
+- The == operator selects ZIP code 98103.
+- The & operator combines all three conditions; each condition is enclosed in parentheses.
+- len(subset) displays the number of matching records.
+
+H. Creating Property Categories
+- pd.cut() divides numerical bedroom counts into intervals.
+- The bins [-1, 2, 4, 100] define the category ranges.
+- labels assign the names Small, Medium, and Large.
+- get_dummies() converts the property_type categories into numerical indicator columns.
+- df_encoded stores the encoded DataFrame.
+
+I. Aggregation
+- groupby("property_type") groups properties by category.
+- mean() calculates average price for each property category.
+- groupby("zipcode") calculates average price for each ZIP code.
+- sort_values(ascending=False) sorts averages from highest to lowest.
+- head() displays the first five results.
+
+J. Outlier Detection
+- quantile([0.25, 0.75]) calculates Q1 and Q3.
+- IQR is Q3 minus Q1.
+- The lower and upper limits are Q1 - 1.5 × IQR and Q3 + 1.5 × IQR.
+- boxplot() displays the price distribution before and after filtering.
+- between() retains prices inside the calculated limits.
+
+K. Saving the Dataset
+- to_csv() exports the cleaned data.
+- index=False prevents the DataFrame index from being added as a separate column.
+
+## 6. PROGRAM WORKFLOW
+1. Import Pandas and Matplotlib.
+2. Read the real estate CSV file.
+3. Standardize the column names.
+4. Inspect the data and count missing values.
+5. Remove duplicates and records without price.
+6. Fill remaining numerical missing values using medians.
+7. Convert the date column to datetime.
+8. Calculate average price by ZIP code and merge it into the dataset.
+9. Filter properties from 2014 with 3-4 bedrooms in ZIP code 98103.
+10. Create property-type categories and encode them.
+11. Calculate average prices by property type and ZIP code.
+12. Display a box plot before outlier removal.
+13. Remove price outliers and display another box plot.
+14. Save the cleaned dataset.
+
+## 7. EXPECTED OUTPUT
+- The first five records are displayed with standardized column names.
+- The total number of missing cells is printed.
+- The number of records matching the selected year, bedroom count, and ZIP code is displayed.
+- Average prices by property type and ZIP code are printed.
+- Two box plots are displayed: before and after outlier removal.
+- A cleaned_realestate.csv file is created.
+- The final message is: Data wrangling completed!
+
+Exact values depend on the dataset.
+
+## 8. VIVA QUESTIONS AND ANSWERS
+
+Q1. What is data wrangling?
+Ans. Data wrangling is the process of cleaning, transforming, and organizing raw data into a useful format for analysis.
+
+Q2. What is Pandas?
+Ans. Pandas is a Python library used for data manipulation and analysis.
+
+Q3. Why are column names converted to lowercase?
+Ans. It creates consistent column names and makes them easier to reference in code.
+
+Q4. What does str.strip() do?
+Ans. It removes leading and trailing whitespace from strings.
+
+Q5. What is the use of drop_duplicates()?
+Ans. It removes duplicate rows from a DataFrame.
+
+Q6. What does dropna(subset=["price"]) do?
+Ans. It removes rows where the price column contains a missing value.
+
+Q7. Why is the median used to fill missing numerical values?
+Ans. The median is less sensitive to extreme values than the mean.
+
+Q8. What is the purpose of pd.to_datetime()?
+Ans. It converts date strings or date-like values into datetime format.
+
+Q9. What is groupby()?
+Ans. It groups records according to one or more columns for analysis.
+
+Q10. What is merge()?
+Ans. merge() combines DataFrames using one or more common columns or keys.
+
+Q11. What is a ZIP code?
+Ans. A ZIP code is a postal code used to identify a geographic delivery area.
+
+Q12. What does pd.cut() do?
+Ans. It divides continuous numerical values into specified intervals or bins.
+
+Q13. What is one-hot encoding?
+Ans. It represents each category using a separate binary indicator column.
+
+Q14. What is aggregation?
+Ans. Aggregation summarizes multiple records using operations such as sum, mean, count, minimum, or maximum.
+
+Q15. What is IQR?
+Ans. IQR is the Interquartile Range, calculated as Q3 - Q1.
+
+Q16. What does a box plot show?
+Ans. It summarizes a numerical distribution using quartiles, median, whiskers, and possible outliers.
+
+Q17. Why are outliers handled?
+Ans. Outliers can strongly affect statistical summaries and some analytical models, so they should be investigated.
+
+Q18. What is the use of to_csv()?
+Ans. It saves a DataFrame into a CSV file.
+
+## 9. SHORT VIVA ANSWER
+This program performs data wrangling on real estate data using Pandas. It standardizes column names, handles missing and duplicate values, converts dates, merges ZIP-code-wise average prices, filters records, creates property categories, performs aggregation, detects outliers using IQR, and saves the cleaned dataset.
+
+## 10. EXTRA QUESTIONS FOR PRACTICE
+1. What is the difference between data cleaning and data wrangling?
+2. What is the difference between merge() and concat()?
+3. What is the purpose of quantile()?
+4. What is the difference between loc and iloc?
+5. What are categorical variables?
+6. What is binning?
+7. What is the difference between an inner join and a left join?
+8. Why should a price column be checked for outliers?
+9. What is the purpose of observed=True in groupby()?
+10. How can a DataFrame be saved in Excel format?
