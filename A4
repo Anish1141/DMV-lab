@@ -1,2 +1,48 @@
-its a4 dmv
+#
+import pandas as pd
+import matplotlib.pyplot as plt
 
+# Load and clean column names
+df = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\realestate_prices.csv")
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+print(df.head())
+
+# Missing values and duplicates
+print(df.isnull().sum().sum())
+df = df.drop_duplicates().dropna(subset=["price"])
+df = df.fillna(df.median(numeric_only=True))
+df["date"] = pd.to_datetime(df["date"].str[:8])
+
+# Merge (zipcode-level average price)
+zip_avg = df.groupby("zipcode")["price"].mean().rename("zip_avg_price")
+df = df.merge(zip_avg, on="zipcode")
+
+# Filter: year 2014, 3-4 bedrooms, one zipcode
+subset = df[(df["date"].dt.year == 2014) & df["bedrooms"].between(3, 4)
+            & (df["zipcode"] == 98103)]
+print("Filtered rows:", len(subset))
+
+# Encode categorical variable
+df["property_type"] = pd.cut(df["bedrooms"], [-1, 2, 4, 100],
+                             labels=["Small", "Medium", "Large"])
+df_encoded = pd.get_dummies(df, columns=["property_type"])
+
+# Aggregate
+print(df.groupby("property_type", observed=True)["price"].mean())
+print(df.groupby("zipcode")["price"].mean().sort_values(ascending=False).head())
+
+# Outliers (IQR)
+q1, q3 = df["price"].quantile([0.25, 0.75])
+iqr = q3 - q1
+df.boxplot(column="price")
+plt.title("Price Before Outlier Removal")
+plt.show()
+
+df = df[df["price"].between(q1 - 1.5 * iqr, q3 + 1.5 * iqr)]
+df.boxplot(column="price")
+plt.title("Price After Outlier Removal")
+plt.show()
+
+# Save
+df.to_csv("cleaned_realestate.csv", index=False)
+print("Data wrangling completed!")
