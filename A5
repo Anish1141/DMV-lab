@@ -50,3 +50,158 @@ d = df.dropna(subset=["PM10", "AQI", "CO"])
 d.plot(x="PM10", y="AQI", kind="scatter", s=d["CO"] * 10, alpha=0.4,
        title="AQI vs PM10 (bubble size = CO)")
 plt.show()
+xxxxxxxxxxxxxxxxxxxxxxxx
+A. Importing Libraries
+- Pandas is used to load, filter, group, and analyze air quality data.
+- Matplotlib is used to generate visualizations.
+
+B. Loading and Exploring the Dataset
+- read_csv() loads the CSV file.
+- parse_dates=["Date"] instructs Pandas to parse the Date column as dates during loading.
+- head() displays the first five rows.
+- info() displays column names, data types, and non-null counts.
+
+C. Selecting One City
+- df["City"] == "Delhi" creates a Boolean condition.
+- df[condition] selects rows where the city is Delhi.
+- sort_values("Date") arranges records in chronological order.
+
+D. Extracting the Year
+- dt.year extracts the year from each date.
+- The extracted value is stored in a new column called Year.
+- This makes year-wise grouping possible.
+
+E. AQI Trend Line Plot
+- plot() creates a graph from the selected DataFrame columns.
+- x="Date" places dates on the horizontal axis.
+- y="AQI" places AQI values on the vertical axis.
+- color="red" sets the line color.
+- title gives the graph a heading.
+- ylabel() labels the vertical axis.
+- show() displays the graph.
+
+F. Pollutant Trend Subplots
+- y=["PM2.5", "PM10", "CO"] selects three pollutant columns.
+- subplots=True creates a separate plot for each pollutant.
+- figsize=(10, 7) controls the overall figure size.
+- Separate plots make the pollutant trends easier to inspect.
+
+G. Yearly Average AQI Bar Plot
+- groupby("Year") groups records by year.
+- ["AQI"].mean() calculates the average AQI for each year.
+- kind="bar" creates a bar chart.
+- The chart compares average AQI across years.
+
+H. Stacked Bar Chart of AQI Categories
+- pd.crosstab() creates a frequency table between Year and AQI_Bucket.
+- Each cell represents the number of records for a category in a year.
+- kind="bar" creates bars.
+- stacked=True stacks the category counts within each yearly bar.
+- The y-axis is labelled Days; this represents days only if the dataset has one record per day.
+
+I. Box Plots
+- df[["PM2.5", "PM10", "CO"]] selects the pollutant columns.
+- kind="box" creates box plots for their distributions.
+- boxplot(column="AQI", by="Year") compares AQI distributions across years.
+- suptitle("") removes the automatically generated overall title.
+
+J. Scatter Plot
+- kind="scatter" creates a scatter plot.
+- PM2.5 is shown on the x-axis and AQI on the y-axis.
+- Each point represents one observation.
+- The graph helps inspect the relationship between PM2.5 and AQI.
+
+K. Bubble Chart
+- dropna(subset=[...]) removes rows missing PM10, AQI, or CO.
+- PM10 is shown on the x-axis and AQI on the y-axis.
+- s=d["CO"] * 10 sets bubble size based on CO values.
+- alpha=0.4 makes bubbles partly transparent.
+- Larger bubbles represent higher CO values according to the selected scaling.
+
+## 6. PROGRAM WORKFLOW
+1. Import Pandas and Matplotlib.
+2. Read the AirQuality.csv file and parse Date.
+3. Inspect the dataset.
+4. Filter the records to select Delhi.
+5. Sort the records by date.
+6. Extract the year from each date.
+7. Plot the AQI trend over time.
+8. Plot PM2.5, PM10, and CO trends separately.
+9. Calculate and plot average AQI per year.
+10. Create a stacked bar chart of AQI categories per year.
+11. Display pollutant and yearly AQI box plots.
+12. Create a scatter plot of AQI versus PM2.5.
+13. Create a bubble chart of AQI versus PM10, with bubble size representing CO.
+
+## 7. EXPECTED OUTPUT
+The program displays:
+1. First five rows and dataset information.
+2. Line graph showing AQI trend in Delhi.
+3. Separate pollutant trend plots for PM2.5, PM10, and CO.
+4. Bar chart showing average AQI by year.
+5. Stacked bar chart showing AQI category counts by year.
+6. Box plots showing pollutant distributions.
+7. Box plot comparing AQI distributions by year.
+8. Scatter plot showing AQI versus PM2.5.
+9. Bubble chart showing AQI versus PM10, with bubble size representing CO.
+
+Exact plots and trends depend on the input dataset.
+
+## 8. VIVA QUESTIONS AND ANSWERS
+
+Q1. What is AQI?
+Ans. AQI stands for Air Quality Index. It is an indicator used to communicate the level of air pollution.
+
+Q2. What is Pandas?
+Ans. Pandas is a Python library used for data manipulation and analysis.
+
+Q3. What is Matplotlib?
+Ans. Matplotlib is a Python library used to create graphs and visualizations.
+
+Q4. What is the use of read_csv()?
+Ans. It reads data from a CSV file and stores it in a DataFrame.
+
+Q5. What does parse_dates do?
+Ans. It converts specified columns into datetime values while loading data.
+
+Q6. What does sort_values() do?
+Ans. It sorts DataFrame rows based on the values in one or more columns.
+
+Q7. What is a line plot?
+Ans. A line plot connects data points and is commonly used to show trends over time.
+
+Q8. What is a bar chart?
+Ans. A bar chart compares values across different categories using rectangular bars.
+
+Q9. What is a stacked bar chart?
+Ans. It displays multiple data series stacked on top of each other in each category.
+
+Q10. What is a box plot?
+Ans. A box plot summarizes data using quartiles, median, whiskers, and possible outliers.
+
+Q11. What is a scatter plot?
+Ans. A scatter plot displays the relationship between two numerical variables using points.
+
+Q12. What is a bubble chart?
+Ans. A bubble chart is a scatter plot in which a third variable is represented by the size of each point.
+
+Q13. What is PM2.5?
+Ans. PM2.5 refers to fine particulate matter with an aerodynamic diameter of 2.5 micrometres or less.
+
+Q14. What is PM10?
+Ans. PM10 refers to particulate matter with an aerodynamic diameter of 10 micrometres or less.
+
+Q15. What is CO?
+Ans. CO stands for carbon monoxide, a colourless and odourless gas.
+
+Q16. What does groupby() do?
+Ans. It groups rows according to selected column values so that calculations can be performed for each group.
+
+Q17. What is crosstab()?
+Ans. crosstab() creates a frequency table that summarizes the relationship between categorical variables.
+
+Q18. What does alpha=0.4 mean?
+Ans. It sets partial transparency for the plotted points.
+
+## 9. SHORT VIVA ANSWER
+This program analyzes AQI trends in Delhi using Pandas and Matplotlib. It loads and filters air quality data, extracts years, and visualizes AQI and pollutant trends using line, bar, stacked bar, box, scatter, and bubble charts.
