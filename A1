@@ -1,1 +1,43 @@
-its a1 dmv
+#
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load data from CSV, Excel, JSON
+csv = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\sales_data.csv")
+excel = pd.read_excel(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\sales_data.xlsx")
+js = pd.read_json(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\sales_data.json")
+
+# Explore
+print(csv.info())
+print(csv.isnull().sum())
+
+# Combine into one DataFrame
+df = pd.concat([csv, excel, js], ignore_index=True)
+df["Date"] = pd.to_datetime(df["Date"])
+
+# Clean
+df = df.drop_duplicates()
+df["Quantity"] = df["Quantity"].fillna(df["Quantity"].median())
+df["Customer"] = df["Customer"].fillna("Unknown")
+
+# Transform
+df["Sales"] = df["Quantity"] * df["Price"]
+df["Month"] = df["Date"].dt.month_name()
+
+# Analyze
+print(df.describe())
+print("Total Sales:", df["Sales"].sum())
+print("Average Order Value:", df["Sales"].mean())
+print(df.groupby("Region")["Sales"].sum())
+print(df["Category"].value_counts())
+
+# Visualize
+df.groupby("Product")["Sales"].sum().plot(kind="bar", title="Sales by Product")
+plt.show()
+
+df.groupby("Category")["Sales"].sum().plot(
+    kind="pie", autopct="%1.1f%%", title="Sales by Category")
+plt.show()
+
+df["Sales"].plot(kind="box", title="Sales Distribution")
+plt.show()
