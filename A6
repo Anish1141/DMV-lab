@@ -37,3 +37,141 @@ plt.show()
 data.plot(kind="bar", title="Regional Sales by Category (Grouped)")
 plt.ylabel("Total Sales")
 plt.show()
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+A. Importing Libraries
+- Pandas is used to load, group, aggregate, and reshape the retail dataset.
+- Matplotlib is used to display the charts.
+
+B. Loading and Exploring the Dataset
+- read_csv() loads the retail sales CSV file.
+- head() displays the first five rows.
+- info() displays the structure and data types of the dataset.
+- describe() provides descriptive statistics for numerical columns.
+
+C. Aggregating Sales by Region
+- groupby("State") groups records by state, which is treated as the region in this program.
+- ["Sales"] selects the sales column.
+- sum() calculates total sales for each state.
+- sort_values(ascending=False) arranges the totals from highest to lowest.
+- The result is stored in the Series named region.
+
+D. Bar Chart
+- kind="bar" creates a vertical bar chart.
+- Each bar represents a state.
+- The bar height represents the total sales in that state.
+- ylabel() labels the y-axis as Total Sales.
+- show() displays the chart.
+
+E. Pie Chart
+- kind="pie" creates a pie chart.
+- Each slice represents a state's share of total sales.
+- autopct="%1.1f%%" displays percentages to one decimal place.
+- ylabel("") removes the default y-axis label.
+
+F. Finding Top Three Regions
+- head(3) selects the first three rows of the sorted region Series.
+- Since the data was sorted in descending order, these are the three states with the highest total sales.
+
+G. Creating a Pivot Table
+- pivot_table() summarizes data in a tabular format.
+- index="State" places states in rows.
+- columns="Shop_Category" creates separate columns for shop categories.
+- values="Sales" selects the numerical values to aggregate.
+- aggfunc="sum" calculates the sum of sales for each state-category combination.
+- fill_value=0 replaces missing combinations with zero.
+
+H. Stacked Bar Chart
+- kind="bar" creates a bar chart.
+- stacked=True stacks category values within each state's bar.
+- It shows both the total and the category-wise composition of sales.
+
+I. Grouped Bar Chart
+- kind="bar" creates a bar chart without stacking.
+- Each category is shown as a separate bar within a state group.
+- It makes it easier to compare categories across states.
+
+## 6. PROGRAM WORKFLOW
+1. Import Pandas and Matplotlib.
+2. Load Retail_Sales_Data.csv.
+3. Display the first five rows, data information, and descriptive statistics.
+4. Group sales by State.
+5. Calculate total sales for each state.
+6. Sort states in descending order of sales.
+7. Display a bar chart of sales by region.
+8. Display a pie chart of each region's sales share.
+9. Print the top three regions.
+10. Create a pivot table using State and Shop_Category.
+11. Display a stacked bar chart.
+12. Display a grouped bar chart.
+
+## 7. EXPECTED OUTPUT
+- The first five rows and dataset information are displayed.
+- Descriptive statistics for numerical columns are printed.
+- Total sales for each state are calculated and displayed in descending order.
+- A bar chart compares sales by region.
+- A pie chart shows the sales share of each region.
+- The top three regions are printed.
+- A pivot table displays sales by state and shop category.
+- A stacked bar chart and grouped bar chart compare category-wise regional sales.
+
+Exact totals and charts depend on the input dataset.
+
+## 8. VIVA QUESTIONS AND ANSWERS
+
+Q1. What is data aggregation?
+Ans. Data aggregation is the process of combining and summarizing data to produce meaningful statistics.
+
+Q2. What is Pandas?
+Ans. Pandas is a Python library used for data manipulation and analysis.
+
+Q3. What is groupby()?
+Ans. groupby() divides data into groups based on one or more columns so that calculations can be performed on each group.
+
+Q4. What is the use of sum()?
+Ans. sum() calculates the total of numerical values.
+
+Q5. What does sort_values() do?
+Ans. It sorts data according to the values in a selected column or Series.
+
+Q6. What does ascending=False mean?
+Ans. It sorts values in descending order, from highest to lowest.
+
+Q7. What is a bar chart?
+Ans. A bar chart compares numerical values across categories using rectangular bars.
+
+Q8. What is a pie chart?
+Ans. A pie chart represents parts of a whole using slices of a circle.
+
+Q9. What is autopct?
+Ans. autopct formats and displays percentage labels on a pie chart.
+
+Q10. What is a pivot table?
+Ans. A pivot table summarizes data by arranging selected variables into rows and columns and applying an aggregation function.
+
+Q11. What is aggfunc="sum"?
+Ans. It instructs the pivot table to calculate the sum for each group.
+
+Q12. What is fill_value=0?
+Ans. It replaces missing cells in the pivot table with zero.
+
+Q13. What is a stacked bar chart?
+Ans. A stacked bar chart places multiple data series on top of one another in each category.
+
+Q14. What is a grouped bar chart?
+Ans. A grouped bar chart displays multiple bars side by side for each category.
+
+Q15. What is the difference between a stacked and grouped bar chart?
+Ans. A stacked chart combines category values into one bar, while a grouped chart displays separate side-by-side bars for comparison.
+
+Q16. How are the top three regions found in this program?
+Ans. Sales are sorted in descending order and head(3) selects the first three regions.
+
+Q17. Why is State used as Region?
+Ans. In this dataset and program, State is treated as the regional grouping column.
+
+Q18. What is Matplotlib?
+Ans. Matplotlib is a Python library used for creating static, animated, and interactive visualizations.
+
+## 9. SHORT VIVA ANSWER
+This program analyzes retail sales performance using Pandas and Matplotlib. It groups sales by state, calculates regional totals, identifies the top three regions, creates a pivot table for shop categories, and visualizes the results using bar, pie, stacked bar, and grouped bar charts.
+
