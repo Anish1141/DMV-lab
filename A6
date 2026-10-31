@@ -1,2 +1,39 @@
-its a6 dmv
+#
+import pandas as pd
+import matplotlib.pyplot as plt
 
+# Load and explore
+df = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\Retail_Sales_Data.csv")
+print(df.head())
+df.info()
+print(df.describe())
+
+# Region = State, Category = Shop_Category
+region = df.groupby("State")["Sales"].sum().sort_values(ascending=False)
+print(region)
+
+# Bar and pie charts
+region.plot(kind="bar", color="skyblue", title="Sales by Region")
+plt.ylabel("Total Sales")
+plt.show()
+
+region.plot(kind="pie", autopct="%1.1f%%", title="Sales Share by Region")
+plt.ylabel("")
+plt.show()
+
+# Top regions
+print("Top 3 Regions:\n", region.head(3))
+
+# Region and category
+data = df.pivot_table(index="State", columns="Shop_Category",
+                      values="Sales", aggfunc="sum", fill_value=0)
+print(data)
+
+# Stacked and grouped bar charts
+data.plot(kind="bar", stacked=True, title="Regional Sales by Category")
+plt.ylabel("Total Sales")
+plt.show()
+
+data.plot(kind="bar", title="Regional Sales by Category (Grouped)")
+plt.ylabel("Total Sales")
+plt.show()
