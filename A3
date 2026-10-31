@@ -50,4 +50,156 @@ X_test = scaler.transform(X_test)
 
 print("Train:", X_train.shape, "Test:", X_test.shape)
 print("Data cleaning completed!")
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+## 5. CODE EXPLAINED
+
+A. Importing Libraries
+- Pandas is used to load and manipulate the dataset.
+- train_test_split divides data into training and testing sets.
+- StandardScaler standardizes numerical features.
+
+B. Loading and Exploring Data
+- read_csv() loads the CSV dataset.
+- head() displays the first five rows by default.
+- info() displays column names, data types, and non-null counts.
+- isnull().sum() counts missing values in each column.
+
+C. Handling Missing Values
+- select_dtypes(include="number") selects numerical columns.
+- columns returns the names of those columns.
+- fillna(0) replaces missing numerical values with zero.
+- The dictionary passed to fillna() assigns "None" to selected categorical columns.
+- The final fillna("No") fills any remaining missing values with "No".
+- In a real project, replacement values should be selected according to what a blank means in each column. Zero, "None", and "No" are not interchangeable in every dataset.
+
+D. Removing Duplicates and Cleaning Text
+- drop_duplicates() removes repeated rows.
+- select_dtypes(exclude="number") selects non-numerical columns.
+- str.strip() removes leading and trailing spaces from text values.
+- astype(str) converts Zip Code values to strings so they are treated as identifiers rather than numbers.
+
+E. Handling Outliers Using IQR
+- The interquartile range (IQR) is Q3 minus Q1.
+- q1 is the 25th percentile and q3 is the 75th percentile.
+- The lower limit is Q1 - 1.5 × IQR.
+- The upper limit is Q3 + 1.5 × IQR.
+- clip() caps values below or above these limits rather than deleting the rows.
+
+F. Feature Engineering
+- The Churn column is created from Customer Status.
+- A customer with status "Churned" gets 1; other statuses get 0.
+- astype(int) converts True/False values into 1/0.
+- Tenure Years is calculated by dividing Tenure in Months by 12.
+
+G. Exporting the Cleaned Dataset
+- to_csv() saves the cleaned DataFrame to a new CSV file.
+- index=False prevents Pandas from writing the row index as an extra column.
+
+H. Separating Features and Target
+- X contains the input features used to predict churn.
+- y contains the target variable, Churn.
+- drop(columns=[...]) removes identifiers and columns excluded from model input.
+
+I. Encoding Categorical Variables
+- Machine learning algorithms generally require numerical input.
+- get_dummies() converts categorical columns into indicator columns.
+- drop_first=True removes one category from each encoded group to reduce redundant columns.
+
+J. Splitting the Dataset
+- train_test_split() divides the data into training and testing sets.
+- test_size=0.2 assigns 20% to testing and 80% to training.
+- random_state=42 makes the split reproducible.
+- stratify=y helps preserve the target class proportions in both sets.
+
+K. Feature Scaling
+- StandardScaler transforms features to have approximately zero mean and unit variance.
+- fit_transform() learns scaling values from the training data and transforms it.
+- transform() applies those same training scaling values to the test data.
+- This avoids learning preprocessing information from the test set.
+
+## 6. PROGRAM WORKFLOW
+1. Import the required libraries.
+2. Load the telecom churn CSV file.
+3. Inspect the first rows, data types, and missing values.
+4. Fill missing numerical and categorical values.
+5. Remove duplicates and trim extra spaces.
+6. Convert Zip Code to string.
+7. Cap outliers in selected numerical columns using IQR.
+8. Create Churn and Tenure Years features.
+9. Save the cleaned dataset.
+10. Separate input features and target.
+11. Encode categorical features.
+12. Split data into training and testing sets.
+13. Scale the training and testing features.
+14. Print the final dataset shapes and completion message.
+
+## 7. EXPECTED OUTPUT
+- The first five rows of the dataset are displayed.
+- Dataset information and missing-value counts are displayed.
+- A cleaned_churn.csv file is created in the current working directory.
+- Categorical features are encoded and the data is split into training and testing sets.
+- The shapes of X_train and X_test are printed.
+- The program displays: Data cleaning completed!
+
+Exact row counts and shapes depend on the supplied dataset.
+
+## 8. VIVA QUESTIONS AND ANSWERS
+
+Q1. What is data cleaning?
+Ans. Data cleaning is the process of identifying and correcting missing, duplicate, inaccurate, or inconsistent data.
+
+Q2. What is customer churn?
+Ans. Customer churn occurs when a customer stops using a company's product or service.
+
+Q3. What is the use of head()?
+Ans. head() displays the first five rows of a DataFrame by default.
+
+Q4. How are missing values identified?
+Ans. isnull().sum() identifies and counts missing values in each column.
+
+Q5. What is fillna()?
+Ans. fillna() replaces missing values with a specified value or statistic.
+
+Q6. Why are duplicate records removed?
+Ans. Duplicates can cause repeated information and may affect analysis and model results.
+
+Q7. What is IQR?
+Ans. IQR stands for Interquartile Range. It is calculated as Q3 minus Q1.
+
+Q8. What is an outlier?
+Ans. An outlier is a value that is unusually far from most other observations.
+
+Q9. What is the IQR rule for detecting outliers?
+Ans. Values below Q1 - 1.5 × IQR or above Q3 + 1.5 × IQR are commonly treated as potential outliers.
+
+Q10. What is feature engineering?
+Ans. Feature engineering is the process of creating or modifying variables to make data more useful for analysis or machine learning.
+
+Q11. What is the target variable in this program?
+Ans. Churn is the target variable.
+
+Q12. What is get_dummies()?
+Ans. It converts categorical values into numerical indicator columns using one-hot encoding.
+
+Q13. What is train_test_split()?
+Ans. It divides a dataset into training and testing subsets.
+
+Q14. Why is the dataset split into training and testing sets?
+Ans. Training data is used to train a model, while testing data is used to evaluate its performance on unseen data.
+
+Q15. What does test_size=0.2 mean?
+Ans. It means 20% of the data is reserved for testing and 80% for training.
+
+Q16. What is StandardScaler?
+Ans. StandardScaler standardizes features by removing the mean and scaling to unit variance.
+
+Q17. Why is stratify=y used?
+Ans. It helps maintain the same approximate target-class proportions in the training and testing sets.
+
+Q18. Why do we use fit_transform() on training data and transform() on test data?
+Ans. The scaler learns parameters from training data only. The same parameters are then applied to test data to avoid data leakage.
+
+## 9. SHORT VIVA ANSWER
+This program cleans a telecom customer churn dataset using Pandas. It handles missing values, removes duplicates, cleans text, caps outliers using the IQR method, creates new features, encodes categorical columns, splits the data into training and testing sets, and applies StandardScaler.
+
 
