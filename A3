@@ -1,2 +1,53 @@
-its a3 dmv
+#
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+# Load and explore
+df = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\telecom_customer_churn.csv")
+print(df.head())
+df.info()
+print(df.isnull().sum())
+
+# Missing values (blank = service not taken / customer did not churn)
+num = df.select_dtypes(include="number").columns
+df[num] = df[num].fillna(0)
+df = df.fillna({"Offer": "None", "Internet Type": "None",
+                "Churn Category": "None", "Churn Reason": "None"})
+df = df.fillna("No")
+
+# Duplicates, inconsistent text, data types
+df = df.drop_duplicates()
+for c in df.select_dtypes(exclude="number").columns:
+    df[c] = df[c].str.strip()
+df["Zip Code"] = df["Zip Code"].astype(str)
+
+# Outliers (IQR capping)
+for c in ["Monthly Charge", "Total Charges", "Total Revenue"]:
+    q1, q3 = df[c].quantile([0.25, 0.75])
+    iqr = q3 - q1
+    df[c] = df[c].clip(q1 - 1.5 * iqr, q3 + 1.5 * iqr)
+
+# Feature engineering
+df["Churn"] = (df["Customer Status"] == "Churned").astype(int)
+df["Tenure Years"] = df["Tenure in Months"] / 12
+
+# Export cleaned data
+df.to_csv("cleaned_churn.csv", index=False)
+
+# Encode, split, scale
+X = df.drop(columns=["Customer ID", "City", "Zip Code", "Customer Status",
+                     "Churn Category", "Churn Reason", "Churn"])
+X = pd.get_dummies(X, drop_first=True)
+y = df["Churn"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+print("Train:", X_train.shape, "Test:", X_test.shape)
+print("Data cleaning completed!")
 
