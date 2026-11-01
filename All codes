@@ -77,6 +77,8 @@ plt.show()
 df.plot(x="Temperature", y="Humidity", kind="scatter",
 title="Temperature vs Humidity")
 plt.show()
+
+
 dmv 3: customer churn
 import pandas as pd
 from sklearn.model_selection import train_test_split
