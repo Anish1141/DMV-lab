@@ -190,46 +190,40 @@ plt.show()
 dmv 6 : region in retail company
 import pandas as pd
 import matplotlib.pyplot as plt
-# Load data
-df = pd.read_csv("Retail_Sales_Data.csv")
+
+# Load and explore
+df = pd.read_csv(r"C:\Users\anish\OneDrive\Desktop\Datasets\DMV\Retail_Sales_Data.csv")
 print(df.head())
-# Total sales by region
-region = df.groupby("Region")["Sales"].sum()
+df.info()
+print(df.describe())
+
+# Region = State, Category = Shop_Category
+region = df.groupby("State")["Sales"].sum().sort_values(ascending=False)
 print(region)
-print("Top Region:", region.idxmax())
-# Bar graph
+
+# Bar and pie charts
 region.plot(kind="bar", color="skyblue", title="Sales by Region")
 plt.ylabel("Total Sales")
 plt.show()
-# Sales by region and category
-data = df.pivot_table(index="Region", columns="Category",
-values="Sales", aggfunc="sum", fill_value=0)
-# Stacked bar graph
+
+region.plot(kind="pie", autopct="%1.1f%%", title="Sales Share by Region")
+plt.ylabel("")
+plt.show()
+
+# Top regions
+print("Top 3 Regions:\n", region.head(3))
+
+# Region and category
+data = df.pivot_table(index="State", columns="Shop_Category",
+                      values="Sales", aggfunc="sum", fill_value=0)
+print(data)
+
+# Stacked and grouped bar charts
 data.plot(kind="bar", stacked=True, title="Regional Sales by Category")
 plt.ylabel("Total Sales")
 plt.show()
 
+data.plot(kind="bar", title="Regional Sales by Category (Grouped)")
+plt.ylabel("Total Sales")
+plt.show()
 
-dmv 7: time series analysis
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.tsa.arima.model import ARIMA
-# Load data
-df = pd.read_csv("Stock_Prices.csv")
-df["Date"] = pd.to_datetime(df["Date"])
-df = df.sort_values("Date").set_index("Date")
-print(df.head())
-# Stock price and moving average
-df["Close"].plot(label="Stock Price")
-df["Close"].rolling(7).mean().plot(label="7-Day Average")
-plt.legend()
-plt.title("Stock Price Trend")
-plt.show()
-# Correlation
-print(df.corr(numeric_only=True))
-# Forecast future prices
-model = ARIMA(df["Close"], order=(5,1,0)).fit()
-forecast = model.forecast(steps=7)
-print("Next 7-Day Forecast:\n", forecast)
-forecast.plot(title="Stock Price Forecast")
-plt.show()
