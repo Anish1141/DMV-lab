@@ -1,1 +1,41 @@
+DMV 2 weather api
+
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Get weather data
+key = "YOUR_API_KEY"
+city = "Pune"
+url = f"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={key}&units=metric"
+data = requests.get(url).json()
+
+# Extract data
+df = pd.DataFrame([{
+    "Date": x["dt_txt"],
+    "Temperature": x["main"]["temp"],
+    "Humidity": x["main"]["humidity"],
+    "Wind": x["wind"]["speed"]
+} for x in data["list"]])
+
+print(df.head())
+print("Average Temperature:", df["Temperature"].mean())
+print("Maximum Temperature:", df["Temperature"].max())
+print("Minimum Temperature:", df["Temperature"].min())
+
+# Graph 1: Temperature
+df.plot(x="Date", y="Temperature", kind="line", title="Temperature Forecast")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Graph 2: Humidity
+df.plot(x="Date", y="Humidity", kind="bar", title="Humidity Forecast")
+plt.tight_layout()
+plt.show()
+
+# Graph 3: Temperature vs Humidity
+df.plot(x="Temperature", y="Humidity", kind="scatter",
+        title="Temperature vs Humidity")
+plt.show()
 
